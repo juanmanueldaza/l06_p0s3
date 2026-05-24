@@ -1,0 +1,82 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  codeql:
+    name: CodeQL Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: javascript
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
+
+      - name: Run CodeQL
+        uses: github/codeql-action/analyze@v2
+
+  build-and-lint:
+    name: Install, Lint and Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ] || [ -f package.json ]; then
+            npm ci
+          else
+            echo "No package.json found — skipping npm install"
+          fi
+
+      - name: Run ESLint
+        run: |
+          if command -v npm >/dev/null 2>&1 && grep -q "eslint" package.json 2>/dev/null; then
+            npm run lint --if-present
+          else
+            echo "ESLint not configured (skipped)"
+          fi
+
+      - name: TypeScript build
+        run: |
+          if command -v npm >/dev/null 2>&1 && grep -q "build" package.json 2>/dev/null; then
+            npm run build --if-present
+          else
+            echo "No build script found (skipped)"
+          fi
+
+      - name: NPM Audit
+        run: |
+          if [ -f package-lock.json ] || [ -f package.json ]; then
+            npm audit --audit-level=high || true
+          else
+            echo "No package.json found — skipping npm audit"
+          fi
+
+  secret-scan:
+    name: Secret scan (gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run gitleaks
+        uses: zricethezav/gitleaks-action@v2
+        with:
+          args: --report-path=gitleaks-report.json
