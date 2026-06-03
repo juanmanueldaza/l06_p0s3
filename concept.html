@@ -290,6 +290,13 @@
   body.focus .feed { opacity:0; width:0; overflow:hidden; transition:opacity 0.5s, width 0.5s; }
   body.focus .source { padding: 48px 120px 100px 120px; }
   body.focus .watermark { opacity:0.3; }
+  /* Writing Desk focus — hide outline + research, expand paper */
+  body.focus .col-outline { opacity:0; width:0; overflow:hidden; transition:opacity 0.5s, width 0.5s; }
+  body.focus .col-research { opacity:0; width:0; overflow:hidden; transition:opacity 0.5s, width 0.5s; }
+  body.focus .col-paper { padding: 48px 160px 100px 160px; }
+  /* Hide chrome in focus */
+  body.focus .fab { opacity:0; pointer-events:none; transition:opacity 0.4s; }
+  body.focus .stat { opacity:0; transition:opacity 0.4s; }
 </style>
 </head>
 <body>
