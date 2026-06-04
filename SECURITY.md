@@ -6,7 +6,7 @@ We currently support the latest version with security updates.
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability, please send an email to juanmanueldaza@gmail.com.
+If you discover a security vulnerability, please send an email to juan@daza.ar.
 
 Please do not report security vulnerabilities through public GitHub issues.
 

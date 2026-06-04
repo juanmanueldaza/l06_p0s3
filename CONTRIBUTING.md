@@ -85,7 +85,7 @@ src/
 
 - **Bug reports**: Include steps to reproduce, expected behavior, and actual behavior.
 - **Feature requests**: Describe the journalist workflow it supports and the expected UX.
-- **Security vulnerabilities**: Do NOT open a public issue. Email juanmanueldaza@gmail.com with `[lo6 security]` in the subject.
+- **Security vulnerabilities**: Do NOT open a public issue. Email juan@daza.ar with `[lo6 security]` in the subject.
 
 ## License
 
